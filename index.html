@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>Triathlon Calculators</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #111;
+      color: white;
+      padding: 16px;
+      text-align: center;
+    }
+    header img {
+      max-width: 240px;
+      display: block;
+      margin: 0 auto 8px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 0 16px;
+    }
+    .card {
+      background: white;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    h2 {
+      margin-top: 0;
+    }
+    label {
+      display: block;
+      margin-top: 8px;
+    }
+    input, select {
+      width: 100%;
+      padding: 6px;
+      margin-top: 4px;
+    }
+    button {
+      margin-top: 12px;
+      padding: 10px;
+      width: 100%;
+      background: #007aff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 12px;
+      padding: 10px;
+      background: #eef3ff;
+      border-radius: 6px;
+    }
+    .external {
+      background: linear-gradient(135deg, #000, #333);
+      color: white;
+      text-align: center;
+      padding: 24px;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+    .right {
+      float: right;
+      font-size: 0.9em;
+      color: #666;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <img src="iantri2.png" alt="iantri" />
+  <h1>Triathlon Calculators</h1>
+</header>
+
+<div class="container">
+
+  <!-- 타이어 공기압 -->
+  <div class="card external" onclick="window.open('https://axs.sram.com/guides/tire/pressure')">
+    <h2>타이어 공기압 계산기</h2>
+    <p>SRAM AXS 공식 계산기로 이동</p>
+  </div>
+
+  <!-- 심박존 계산기 -->
+  <div class="card">
+    <h2>심박존 계산기 <span class="right">Training Intensity</span></h2>
+
+    <label>종목</label>
+    <select id="hrSport">
+      <option value="run">달리기</option>
+      <option value="bike">사이클</option>
+    </select>
+
+    <label>
+      <input type="checkbox" id="karvonen" /> Karvonen 방식 사용
+    </label>
+
+    <label>HR Max</label>
+    <input type="number" id="hrMax" value="180" />
+
+    <label>HR Rest (Karvonen 선택 시)</label>
+    <input type="number" id="hrRest" value="60" />
+
+    <button onclick="calcHR()">계산</button>
+    <div class="result" id="hrResult"></div>
+  </div>
+
+  <!-- FTP 계산기 -->
+  <div class="card">
+    <h2>사이클 FTP 훈련 존</h2>
+
+    <label>FTP (W)</label>
+    <input type="number" id="ftp" value="250" />
+
+    <button onclick="calcFTP()">계산</button>
+    <div class="result" id="ftpResult"></div>
+  </div>
+
+  <!-- 물 소비량 -->
+  <div class="card">
+    <h2>사이클 물 소비량 계산기</h2>
+
+    <label>체중 (kg)</label>
+    <input type="number" id="waterWeight" value="60" />
+
+    <label>환경</label>
+    <select id="waterEnv">
+      <option value="1.0">Standard</option>
+      <option value="1.05">Sweaty (+5%)</option>
+      <option value="0.95">Dry (-5%)</option>
+    </select>
+
+    <label>훈련 강도</label>
+    <select id="waterIntensity">
+      <option value="0.5">Zone 2 / Endurance</option>
+      <option value="0.65">SST</option>
+      <option value="0.75">Tempo</option>
+      <option value="0.9">VO2max</option>
+      <option value="0.9">Olympic</option>
+      <option value="0.8">Half</option>
+      <option value="0.75">King</option>
+    </select>
+
+    <label>훈련 시간 (시간)</label>
+    <input type="number" id="waterTime" value="2" />
+
+    <label>보정 (%)</label>
+    <input type="number" id="waterAdj" value="0" />
+
+    <button onclick="calcWater()">계산</button>
+    <div class="result" id="waterResult"></div>
+  </div>
+
+  <!-- 탄수화물 -->
+  <div class="card">
+    <h2>탄수화물 소비량 계산기</h2>
+
+    <label>종목</label>
+    <select id="carbSport">
+      <option value="bike">사이클</option>
+      <option value="run">달리기</option>
+    </select>
+
+    <label>시간 (시간)</label>
+    <input type="number" id="carbTime" value="2" />
+
+    <label>보정 (%)</label>
+    <input type="number" id="carbAdj" value="0" />
+
+    <button onclick="calcCarb()">계산</button>
+    <div class="result" id="carbResult"></div>
+  </div>
+
+</div>
+
+<script>
+  function calcHR() {
+    const max = +hrMax.value;
+    const rest = +hrRest.value;
+    const kar = karvonen.checked;
+
+    const zones = [0.6,0.7,0.8,0.9,1.0];
+    let out = "";
+
+    zones.forEach((z,i)=>{
+      let v = kar ? ((max-rest)*z+rest) : max*z;
+      out += `Zone ${i+1}: ${Math.round(v)} bpm<br>`;
+    });
+    out += "<b>SST: Zone 3~4</b>";
+    hrResult.innerHTML = out;
+  }
+
+  function calcFTP() {
+    const ftpVal = +ftp.value;
+    ftpResult.innerHTML = `
+      Z2: ${Math.round(ftpVal*0.7)} W<br>
+      SST: ${Math.round(ftpVal*0.88)} W<br>
+      Tempo: ${Math.round(ftpVal*0.82)} W<br>
+      VO2max: ${Math.round(ftpVal*1.05)} W
+    `;
+  }
+
+  function calcWater() {
+    const base = waterWeight.value * waterIntensity.value * waterTime.value * 0.01;
+    const env = waterEnv.value;
+    const adj = 1 + waterAdj.value/100;
+    const total = base * env * adj;
+    waterResult.innerHTML = `총 물 소비량: <b>${total.toFixed(2)} L</b>`;
+  }
+
+  function calcCarb() {
+    let base = 75 * carbTime.value;
+    if (carbSport.value === "run") base *= 0.67;
+    base *= (1 + carbAdj.value/100);
+    carbResult.innerHTML = `총 탄수화물: <b>${Math.round(base)} g</b>`;
+  }
+</script>
+
+</body>
+</html>
