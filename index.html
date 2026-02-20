@@ -174,19 +174,28 @@ function HRZone({ onBack }) {
       <Card>
         <SectionTitle emoji="🚴🏃❤️" title="심박존 계산기" />
 <Desc>
-  최대 심박수를 입력하여 종목별 훈련 심박존을 계산합니다.
-  <div className="mt-2 text-[1em] text-gray-500 leading-relaxed">
-    {/* block 클래스를 주어 모델끼리는 줄바꿈을 하되, 내부 내용은 한 줄로 이어지게 합니다 */}
-    <div className="block">
-      <strong className="font-bold text-gray-600 mr-1">· HRmax 모델:</strong>
-      <span>최대심박수 수치만 활용하여 일반적인 운동 강도를 쉽고 빠르게 파악</span>
+  {/* 전체 크기를 동일하게 유지하기 위해 감싸는 div 추가 */}
+  <div className="text-[1em] leading-relaxed">
+    
+    {/* 1줄: 전체 회색 */}
+    <div className="text-gray-500">
+      최대 심박수를 입력하여 종목별 훈련 심박존을 계산합니다.
     </div>
-    <div className="block mt-1">
-      <strong className="font-bold text-gray-600 mr-1">· Karvonen 모델:</strong>
-      <span>안정시 심박수를 포함하여 개인의 숙련도와 체력 수준을 정밀하게 반영</span>
+
+    {/* 2줄: 모델명(검정) + 설명(회색) */}
+    <div className="mt-1 text-gray-500">
+      <strong className="font-bold text-black">· HRmax 모델:</strong>
+      <span className="ml-1">최대심박수 수치만 활용하여 일반적인 운동 강도를 쉽고 빠르게 파악</span>
     </div>
+
+    {/* 3줄: 모델명(검정) + 설명(회색) */}
+    <div className="mt-1 text-gray-500">
+      <strong className="font-bold text-black">· Karvonen 모델:</strong>
+      <span className="ml-1">안정시 심박수를 포함하여 개인의 숙련도와 체력 수준을 정밀하게 반영</span>
+    </div>
+
   </div>
-</Desc>       
+    
        
 
 <div className="flex gap-2 mb-4">
