@@ -175,13 +175,13 @@ function HRZone({ onBack }) {
         <SectionTitle emoji="🚴🏃❤️" title="심박존 계산기" />
 <Desc>
   최대 심박수를 입력하여 종목별 훈련 심박존을 계산합니다.
-  <div className="mt-2 text-sm text-gray-600">
-    <p>
-      <strong>· HRmax 모델:</strong> 최대심박수 수치만 활용하여 일반적인 운동 강도를 쉽고 빠르게 파악
-    </p>
-    <p className="mt-1">
-      <strong>· Karvonen 모델:</strong> 안정시 심박수를 포함하여 개인의 숙련도와 체력 수준을 정밀하게 반영
-    </p>
+  <div className="mt-2 text-[0.875rem] leading-relaxed text-gray-500"> {/* 크기와 색상을 작고 연하게 고정 */}
+    <div>
+      <strong className="font-bold text-gray-600">· HRmax 모델:</strong> 최대심박수 수치만 활용하여 일반적인 운동 강도를 쉽고 빠르게 파악
+    </div>
+    <div className="mt-1">
+      <strong className="font-bold text-gray-600">· Karvonen 모델:</strong> 안정시 심박수를 포함하여 개인의 숙련도와 체력 수준을 정밀하게 반영
+    </div>
   </div>
 </Desc>
 <div className="flex gap-2 mb-4">
