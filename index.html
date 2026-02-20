@@ -173,8 +173,20 @@ function HRZone({ onBack }) {
     <div><BackBtn onBack={onBack} />
       <Card>
         <SectionTitle emoji="🚴🏃❤️" title="심박존 계산기" />
-        <Desc>{`최대 심박수를 입력하여 종목별 훈련 심박존을 계산합니다.\n· HRmax 모델 : 최대 심박수만 입력 / 일반적인 훈련 강도 파악\n· Karvonen 모델 : 최대 심박수 + 안정시 심박수 입력 / 개인 체력 수준이 반영된 존 산출\n※ 안정시 심박 측정이 부정확하면 HRmax 모델보다 오히려 부정확할 수 있으니 유의하세요.`}</Desc>
-        <div className="flex gap-2 mb-4">
+<Desc>
+  최대 심박수를 입력하여 종목별 훈련 심박존을 계산합니다.
+  <div className="mt-2 text-sm text-gray-600">
+    <p>
+      <strong>· HRmax 모델:</strong><br />
+      최대심박수 수치만 활용하여 일반적인 운동 강도를 쉽고 빠르게 파악
+    </p>
+    <p className="mt-1">
+      <strong>· Karvonen 모델:</strong><br />
+      안정시 심박수를 포함하여 개인의 숙련도와 체력 수준을 정밀하게 반영
+    </p>
+  </div>
+</Desc>
+<div className="flex gap-2 mb-4">
           {["bike","run"].map(s => (
             <button key={s} onClick={() => setSport(s)}
               className={`flex-1 py-2 rounded-xl text-sm font-bold transition ${sport===s?"bg-red-500 text-white":"bg-gray-100 text-gray-500 hover:bg-gray-200"}`}>
