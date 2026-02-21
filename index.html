@@ -748,9 +748,7 @@ function RunPace({ onBack }) {
       { label:"Tempo",          pace:secToMMSS(p.tempo), note:"역치 직전 / Zone 3 · 10km 페이스 × 1.08 (Jack Daniels T-pace)" },
       { label:"LT (역치)",      pace:secToMMSS(p.lt),    note:"젖산역치 / Zone 4 · Riegel 60분 역산" },
       { label:"VO₂max",        pace:secToMMSS(p.vo2),   note:"최대산소섭취 / Zone 5 · Riegel 12분 역산" },
-      { label:"하프마라톤 예상", pace:secToHMMSS(hmSec), subPace:secToMMSS(hmSec/21.0975), note:"21.0975km" },
-      { label:"풀마라톤 예상",   pace:secToHMMSS(fmSec), subPace:secToMMSS(fmSec/42.195),  note:"42.195km" },
-    ]);
+        ]);
   };
 
   return (
